@@ -1,7 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import MainLayout from '../layouts/mainlayout.vue'
+import MainLayout from '../layouts/MainLayout.vue'
 
-const pagina = () => import('../views/EmConstrucaoView.vue')
+const emConstrucao = () => import('../views/EmConstrucaoView.vue')
+const chamados = () => import('../views/ChamadosView.vue')
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -10,15 +11,15 @@ const router = createRouter({
       path: '/',
       component: MainLayout,
       children: [
-        { path: '', component: pagina, meta: { title: 'Dashboard' } },
-        { path: 'fila', component: pagina, meta: { title: 'Fila não atribuída' } },
-        { path: 'abertos', component: pagina, meta: { title: 'Chamados Abertos' } },
-        { path: 'em-andamento', component: pagina, meta: { title: 'Em Andamento' } },
-        { path: 'resolvidos', component: pagina, meta: { title: 'Resolvidos' } },
-        { path: 'chamados', component: pagina, meta: { title: 'Todos os Chamados' } },
-        { path: 'equipes', component: pagina, meta: { title: 'Equipes' } },
-        { path: 'relatorios', component: pagina, meta: { title: 'Relatórios' } },
-        { path: 'configuracoes', component: pagina, meta: { title: 'Configurações' } },
+        { path: '', component: emConstrucao, meta: { title: 'Dashboard' } },
+        { path: 'fila', component: chamados, meta: { title: 'Fila não atribuída', filtro: { semAgente: true } } },
+        { path: 'abertos', component: chamados, meta: { title: 'Chamados Abertos', filtro: { status: ['aberto'] } } },
+        { path: 'em-andamento', component: chamados, meta: { title: 'Em Andamento', filtro: { status: ['em_andamento'] } } },
+        { path: 'resolvidos', component: chamados, meta: { title: 'Resolvidos', filtro: { status: ['resolvido'] } } },
+        { path: 'chamados', component: chamados, meta: { title: 'Todos os Chamados' } },
+        { path: 'equipes', component: emConstrucao, meta: { title: 'Equipes' } },
+        { path: 'relatorios', component: emConstrucao, meta: { title: 'Relatórios' } },
+        { path: 'configuracoes', component: emConstrucao, meta: { title: 'Configurações' } },
       ],
     },
   ],
