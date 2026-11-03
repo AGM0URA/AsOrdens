@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import MainLayout from '../layouts/MainLayout.vue'
+const dashboard = () => import('../views/DashboardView.vue')
 
 const emConstrucao = () => import('../views/EmConstrucaoView.vue')
 const chamados = () => import('../views/ChamadosView.vue')
@@ -11,7 +12,7 @@ const router = createRouter({
       path: '/',
       component: MainLayout,
       children: [
-        { path: '', component: emConstrucao, meta: { title: 'Dashboard' } },
+        { path: '', component: dashboard, meta: { title: 'Dashboard' } },
         { path: 'fila', component: chamados, meta: { title: 'Fila não atribuída', filtro: { semAgente: true } } },
         { path: 'abertos', component: chamados, meta: { title: 'Chamados Abertos', filtro: { status: ['aberto'] } } },
         { path: 'em-andamento', component: chamados, meta: { title: 'Em Andamento', filtro: { status: ['em_andamento'] } } },
