@@ -1,4 +1,6 @@
 import { chamados } from '../mocks/chamados'
+import { usuarioAtual } from '../mocks/usuario'
+
 
 const esperar = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
@@ -10,6 +12,7 @@ export const chamadosService = {
     return chamados.filter((c) => {
       if (filtro.status && !filtro.status.includes(c.status)) return false
       if (filtro.semAgente && c.agente) return false
+      if (filtro.agente && c.agente !== filtro.agente) return false
       return true
     })
   },
@@ -41,6 +44,43 @@ export const chamadosService = {
     
     const chamado = chamados.find((c) => c.id === id)
     Object.assign(chamado, dados, { atualizadoEm: new Date().toISOString() })
+    return chamado
+  },
+
+    async puxar(id) {
+    await esperar(150)
+    // API real: await api.post(`/chamados/${id}/puxar`)
+    const chamado = chamados.find((c) => c.id === id)
+    if (chamado.agente) throw new Error('Este chamado já foi atribuído a outro agente.')
+    chamado.agente = usuarioAtual.nome
+    chamado.status = 'em_andamento'
+    chamado.atualizadoEm = new Date().toISOString()
+    return chamado
+  },
+
+  async alterarStatus(id, status) {
+    await esperar(100)
+    // API real: await api.patch(`/chamados/${id}`, { status })
+    const chamado = chamados.find((c) => c.id === id)
+    chamado.status = status
+    chamado.atualizadoEm = new Date().toISOString()
+    return chamado
+  },
+
+  async enviarMensagem(id, { texto, anexos }) {
+    await esperar(150)
+    // API real: POST /chamados/:id/mensagens (multipart, por causa dos anexos)
+    const chamado = chamados.find((c) => c.id === id)
+    chamado.mensagens ??= []
+    chamado.mensagens.push({
+      id: crypto.randomUUID(),
+      autor: 'agente',
+      nome: usuarioAtual.nome,
+      texto,
+      anexos,
+      enviadoEm: new Date().toISOString(),
+    })
+    chamado.atualizadoEm = new Date().toISOString()
     return chamado
   },
 }

@@ -6,6 +6,7 @@ import StatusBadge from './StatusBadge.vue'
 import { useChamados } from '../composables/useChamados'
 import { chamadosService } from '../services/chamadosService'
 import { prioridadeLabel, formatarData, formatarTamanho } from '../utils/chamados'
+import { useRouter } from 'vue-router'
 
 const { detalheId, versao, fecharDetalhe, abrirEdicao } = useChamados()
 const chamado = ref(null)
@@ -20,6 +21,29 @@ function editar() {
   const atual = chamado.value
   fecharDetalhe()
   abrirEdicao(atual)
+  
+}
+
+const router = useRouter()
+const { atualizarListas } = useChamados()
+
+async function puxar() {
+  const id = chamado.value.id
+  try {
+    await chamadosService.puxar(id)
+  } catch (e) {
+    alert(e.message)
+    return
+  }
+  atualizarListas()
+  fecharDetalhe()
+  router.push(`/atendimento/${id}`)
+}
+
+function atender() {
+  const id = chamado.value.id
+  fecharDetalhe()
+  router.push(`/atendimento/${id}`)
 }
 </script>
 
@@ -57,7 +81,9 @@ function editar() {
 
     <template #rodape>
       <button class="btn btn-secundario" @click="fecharDetalhe">Fechar</button>
-      <button class="btn btn-primario" @click="editar"><Pencil :size="15" /> Editar chamado</button>
+      <button class="btn btn-secundario" @click="editar"><Pencil :size="15" /> Editar chamado</button>
+      <button v-if="!chamado.agente" class="btn btn-primario" @click="puxar">Puxar e atender</button>
+      <button v-else class="btn btn-primario" @click="atender">Abrir atendimento</button>
     </template>
   </BaseModal>
 </template>

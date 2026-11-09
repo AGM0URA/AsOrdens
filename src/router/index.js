@@ -1,5 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import MainLayout from '../layouts/MainLayout.vue'
+import { usuarioAtual } from '../mocks/usuario'
+
+const atendimento = () => import('../views/AtendimentoView.vue')
 const dashboard = () => import('../views/DashboardView.vue')
 
 const emConstrucao = () => import('../views/EmConstrucaoView.vue')
@@ -21,6 +24,8 @@ const router = createRouter({
         { path: 'equipes', component: emConstrucao, meta: { title: 'Equipes' } },
         { path: 'relatorios', component: emConstrucao, meta: { title: 'Relatórios' } },
         { path: 'configuracoes', component: emConstrucao, meta: { title: 'Configurações' } },
+        { path: 'minha-fila', component: chamados, meta: { title: 'Minha fila', filtro: { agente: usuarioAtual.nome, status: ['aberto', 'em_andamento'] } } },
+        { path: 'atendimento/:id', component: atendimento, meta: { title: 'Atendimento' } },
       ],
     },
   ],

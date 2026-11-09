@@ -38,11 +38,11 @@ const minhaFila = computed(
         <Bell :size="18" />
         <span class="ponto"></span>
       </button>
-      <button class="btn-fila">
+      <RouterLink to="/minha-fila" class="btn-fila">
         <Inbox :size="16" />
         Fila
         <span class="contador">{{ minhaFila }}</span>
-      </button>
+      </RouterLink>
     </div>
   </header>
 </template>
@@ -105,6 +105,8 @@ p {
   background: #fff;
   font-size: 14px;
   font-weight: 500;
+  color: var(--color-text);
+  text-decoration: none;
 }
 
 .contador {
