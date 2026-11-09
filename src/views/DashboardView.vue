@@ -1,17 +1,24 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted,watch } from 'vue'
 import { CircleAlert, Clock, CircleCheck, ArrowUp } from 'lucide-vue-next'
 import KpiCard from '../components/KpiCard.vue'
 import GraficoSemana from '../components/GraficoSemana.vue'
 import GraficoCategorias from '../components/GraficoCategorias.vue'
 import ChamadosTabela from '../components/ChamadosTabela.vue'
-import { dashboardService } from '../services/dashboardService'
+import { dashboardService } from '../services/dashboardService' 
+import { useChamados } from '../composables/useChamados'
 
 const resumo = ref(null)
 
 onMounted(async () => {
   resumo.value = await dashboardService.resumo()
 })
+
+const { versao } = useChamados()
+watch(versao, async () => {
+  resumo.value = await dashboardService.resumo()
+})
+
 </script>
 
 <template>

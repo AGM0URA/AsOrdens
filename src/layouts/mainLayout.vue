@@ -1,22 +1,25 @@
 <script setup>
 import AppSidebar from '../components/AppSidebar.vue'
 import AppTopbar from '../components/AppTopbar.vue'
+import ChamadoFormModal from '../components/ChamadoFormModal.vue'
+import ChamadoDetalheModal from '../components/ChamadoDetalheModal.vue'
+import { useChamados } from '../composables/useChamados'
 
-function abrirNovoChamado() {
-  // TODO: abrir o modal de Novo chamado (próximos passos)
-  console.log('abrir modal de novo chamado')
-}
+const { formAberto, detalheId, abrirNovo } = useChamados()
 </script>
 
 <template>
   <div class="app">
-    <AppSidebar @novo-chamado="abrirNovoChamado" />
+    <AppSidebar @novo-chamado="abrirNovo" />
     <div class="conteudo">
       <AppTopbar />
       <main class="pagina">
         <RouterView />
       </main>
     </div>
+
+    <ChamadoFormModal v-if="formAberto" />
+    <ChamadoDetalheModal v-if="detalheId" />
   </div>
 </template>
 

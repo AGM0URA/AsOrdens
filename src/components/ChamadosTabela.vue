@@ -2,6 +2,11 @@
 import { ref, computed, watch } from 'vue'
 import { Search, Funnel, ArrowUp, ArrowDown, Minus } from 'lucide-vue-next'
 import { statusLabel, prioridadeLabel, formatarData } from '../utils/chamados'
+import { useChamados } from '../composables/useChamados'
+
+
+
+const { abrirDetalhe } = useChamados()
 
 const props = defineProps({
   chamados: { type: Array, required: true },
@@ -147,7 +152,7 @@ watch([filtroStatus, filtroPrioridade, busca], () => {
             </tr>
           </thead>
           <tbody>
-            <tr v-for="c in paginados" :key="c.id">
+           <tr v-for="c in paginados" :key="c.id" class="linha" @click="abrirDetalhe(c.id)">
               <td class="col-id">{{ c.id }}</td>
               <td class="col-titulo" :title="c.titulo">{{ c.titulo }}</td>
               <td class="col-suave">{{ c.solicitante }}</td>
@@ -196,6 +201,15 @@ watch([filtroStatus, filtroPrioridade, busca], () => {
 </template>
 
 <style scoped>
+
+.linha {
+  cursor: pointer;
+}
+
+.linha:hover {
+  background: var(--color-primary-soft) !important;
+}
+
 .filtros {
   display: flex;
   align-items: center;
