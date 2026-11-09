@@ -8,7 +8,7 @@ const dashboard = () => import('../views/DashboardView.vue')
 
 const emConstrucao = () => import('../views/EmConstrucaoView.vue')
 const chamados = () => import('../views/ChamadosView.vue')
-
+const relatorios = () => import('../views/RelatoriosView.vue')
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -23,7 +23,7 @@ const router = createRouter({
         { path: 'resolvidos', component: chamados, meta: { title: 'Resolvidos', filtro: { status: ['resolvido'] } } },
         { path: 'chamados', component: chamados, meta: { title: 'Todos os Chamados' } },
         { path: 'equipes', component: equipes, meta: { title: 'Equipes' } },
-        { path: 'relatorios', component: emConstrucao, meta: { title: 'Relatórios' } },
+        { path: 'relatorios', component: relatorios, meta: { title: 'Relatórios' } },
         { path: 'configuracoes', component: emConstrucao, meta: { title: 'Configurações' } },
         { path: 'minha-fila', component: chamados, meta: { title: 'Minha fila', filtro: { agente: usuarioAtual.nome, status: ['aberto', 'em_andamento'] } } },
         { path: 'atendimento/:id', component: atendimento, meta: { title: 'Atendimento' } },
