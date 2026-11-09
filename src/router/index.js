@@ -5,7 +5,7 @@ const equipes = () => import('../views/EquipesView.vue')
 
 const atendimento = () => import('../views/AtendimentoView.vue')
 const dashboard = () => import('../views/DashboardView.vue')
-
+const configuracoes = () => import('../views/ConfiguracoesView.vue')
 const emConstrucao = () => import('../views/EmConstrucaoView.vue')
 const chamados = () => import('../views/ChamadosView.vue')
 const relatorios = () => import('../views/RelatoriosView.vue')
@@ -24,7 +24,7 @@ const router = createRouter({
         { path: 'chamados', component: chamados, meta: { title: 'Todos os Chamados' } },
         { path: 'equipes', component: equipes, meta: { title: 'Equipes' } },
         { path: 'relatorios', component: relatorios, meta: { title: 'Relatórios' } },
-        { path: 'configuracoes', component: emConstrucao, meta: { title: 'Configurações' } },
+        { path: 'configuracoes', component: configuracoes, meta: { title: 'Configurações' } },
         { path: 'minha-fila', component: chamados, meta: { title: 'Minha fila', filtro: { agente: usuarioAtual.nome, status: ['aberto', 'em_andamento'] } } },
         { path: 'atendimento/:id', component: atendimento, meta: { title: 'Atendimento' } },
       ],

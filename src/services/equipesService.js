@@ -14,6 +14,7 @@ export const equipesService = {
       const contar = (status) => meus.filter((c) => c.status === status).length
       return {
         ...a,
+        disponibilidade: a.nome === usuarioAtual.nome ? usuarioAtual.disponibilidade : a.disponibilidade,
         abertos: contar('aberto'),
         emAndamento: contar('em_andamento'),
         resolvidos: contar('resolvido'),
